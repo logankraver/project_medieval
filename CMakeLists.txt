@@ -9,6 +9,7 @@ add_executable(
     src/main.cpp
     ${PERSON_DIR}/person.cpp
     ${PERSON_DIR}/farmer.cpp
+    ${PERSON_DIR}/merchant.cpp
     src/world/world.cpp
     src/dice.cpp
 )

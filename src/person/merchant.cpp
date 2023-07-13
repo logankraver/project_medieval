@@ -24,3 +24,6 @@ void merchant::buy(int amt) {
     }
 }
 
+void merchant::act(dice* dice_ptr) {
+
+}

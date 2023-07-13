@@ -13,11 +13,17 @@ class world {
 
         std::vector<person*> population;
         std::vector<merchant*> marketplace;
+        std::vector<std::vector<char> > map;
+        int map_width;
+        int map_height;
         int day;
         dice world_dice;
         
-        void initalize();
+        void initalize(int width = 40, int height = 40);
         void run();
+
+    private:
+        void print_map();
 
 };
 
