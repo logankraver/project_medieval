@@ -1,6 +1,7 @@
 #include "world.h"
 #include "../person/person.h"
 #include "../person/farmer.h"
+#include "../person/merchant.h"
 #include <iostream>
 #include <random>
 

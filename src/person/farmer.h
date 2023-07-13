@@ -10,7 +10,6 @@ class farmer : public person {
         int farmed_goods;
 
         void act(dice* dice_ptr) override;
-        void set_farmed_goods(int f);
         void farm(dice* dice_ptr);
         void sell(int amt);
 };
