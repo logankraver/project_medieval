@@ -2,6 +2,8 @@
 #include "../person/person.h"
 #include "../person/farmer.h"
 #include "../person/merchant.h"
+#include "chunk.h"
+#include <cassert>
 #include <iostream>
 #include <random>
 #include <vector>
@@ -32,14 +34,16 @@ void world::initalize(int width, int height) {
     }
 
     // initalize map
-    map = std::vector<std::vector<char> >(map_height, std::vector<char>(map_width, 'e'));
+    map = std::vector<std::vector<chunk*> >(map_height, std::vector<chunk*>(map_width));
     for (int i = 0; i < map_height; i++) {
         for (int j = 0; j < map_width; j++) {
             // border is water, otherwise land
             if (i == 0 || j == 0 || i == map_height - 1 || j == map_width - 1) {
-                map[i][j] = '0';
+                chunk* temp = new chunk('0', i, j);
+                map[i][j] = temp;
             } else {
-                map[i][j] = '1';
+                chunk* temp = new chunk('1', i, j);
+                map[i][j] = temp;
             }
         }
     }
@@ -67,14 +71,15 @@ void world::run() {
 }
 
 void world::print_map() {
+    std::cout << "\033[2J\033[1;1H";
     for (int i = 0; i < map_height; i++) {
         for (int j = 0; j < map_width; j++) {
-            if (map[i][j] == '0') {
-                std::cout << BLUE << map[i][j] << RESET;
-            } else if (map[i][j] == '1') {
-                std::cout << GREEN << map[i][j] << RESET;
+            if (map[i][j]->biome == '0') {
+                std::cout << BLUE << map[i][j]->biome << RESET;
+            } else if (map[i][j]->biome == '1') {
+                std::cout << GREEN << map[i][j]->biome << RESET;
             } else {
-                std::cout << RED << map[i][j] << RESET;
+                std::cout << RED << map[i][j]->biome << RESET;
             }
             std::cout << " ";
         }

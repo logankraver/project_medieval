@@ -4,6 +4,7 @@
 #include "../person/person.h"
 #include "../person/merchant.h"
 #include "../dice.h"
+#include "chunk.h"
 #include <random>
 #include <vector>
 
@@ -13,7 +14,7 @@ class world {
 
         std::vector<person*> population;
         std::vector<merchant*> marketplace;
-        std::vector<std::vector<char> > map;
+        std::vector<std::vector<chunk*> > map;
         int map_width;
         int map_height;
         int day;

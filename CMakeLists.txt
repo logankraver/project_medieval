@@ -11,6 +11,7 @@ add_executable(
     ${PERSON_DIR}/farmer.cpp
     ${PERSON_DIR}/merchant.cpp
     src/world/world.cpp
+    src/world/chunk.cpp
     src/dice.cpp
 )
 
