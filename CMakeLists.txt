@@ -16,4 +16,6 @@ add_executable(
 )
 
 
+target_link_libraries(Medieval_Sim PRIVATE ncurses)
+
 

@@ -3,25 +3,22 @@
 #include "../person/farmer.h"
 #include "../person/merchant.h"
 #include "chunk.h"
-#include <cassert>
 #include <iostream>
 #include <random>
 #include <vector>
-
-// ANSI color codes
-#define RESET   "\033[0m"
-#define BLACK   "\033[30m"      /* Black */
-#define RED     "\033[31m"      /* Red */
-#define GREEN   "\033[32m"      /* Green */
-#define YELLOW  "\033[33m"      /* Yellow */
-#define BLUE    "\033[34m"      /* Blue */
-#define MAGENTA "\033[35m"      /* Magenta */
-#define CYAN    "\033[36m"      /* Cyan */
-#define WHITE   "\033[37m"      /* White */
+#include <ncurses.h>
 
 world::world() {}
 
 void world::initalize(int width, int height) {
+    initscr();
+    start_color();
+
+    if (has_colors()) {
+        init_pair(1, COLOR_BLUE, COLOR_BLACK);
+        init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    }
+
     day = 0;
     map_width = width;
     map_height = height;
@@ -51,11 +48,9 @@ void world::initalize(int width, int height) {
 
 void world::run() {
     print_map();
-    std::string dummy;
-    std::cout << "Day " << day << "\n";
-    std::cout << "Current Population: " << population.size() << "\n";
-    std::cout << "Move onto next day?";
-    std::cin >> dummy;
+    printw("Day %d\n", day);
+    printw("Current Population: %d\n", population.size());
+    printw("Move onto next day?\n");
 
     // people take action
     for (int i = 0; i < population.size(); i++) {
@@ -68,21 +63,27 @@ void world::run() {
     }
 
     day += 1;
+    refresh();
+    getch();
 }
 
 void world::print_map() {
-    std::cout << "\033[2J\033[1;1H";
+    clear();
     for (int i = 0; i < map_height; i++) {
         for (int j = 0; j < map_width; j++) {
             if (map[i][j]->biome == '0') {
-                std::cout << BLUE << map[i][j]->biome << RESET;
+                attron(COLOR_PAIR(1));
+                printw("%c", map[i][j]->biome);
+                attroff(COLOR_PAIR(1));
             } else if (map[i][j]->biome == '1') {
-                std::cout << GREEN << map[i][j]->biome << RESET;
+                attron(COLOR_PAIR(2));
+                printw("%c", map[i][j]->biome);
+                attroff(COLOR_PAIR(2));
             } else {
-                std::cout << RED << map[i][j]->biome << RESET;
+                printw("%c", map[i][j]->biome);
             }
-            std::cout << " ";
+            printw(" ");
         }
-        std::cout << "\n";
+        printw("\n");
     }
 }
